@@ -6,7 +6,7 @@ modified: 2013-10-03
 category: articles
 tags: [AutoFixture, C#, NUnit, NUnitAddin, Unit Testing]
 image:
-  feature: so-simple-sample-image-2.jpg
+  feature: so-simple-sample-image-1.jpg
 comments: true
 share: true
 ---

@@ -1,6 +1,6 @@
-title:            Personal Blog
+title:            Gert Jansen van Rensburg's Blog
 description:      "Learn from yesterday, live for today, hope for tomorrow. The important thing is not to stop questioning. - Albert Einstein"
-logo:             gertjvr-avatar.png
+logo:             
 disqus_shortname: 
 search:           true
 # Change url to your domain. Leave localhost server or blank when working locally.
@@ -9,7 +9,7 @@ url:              http://blog.gertjvr.com
 # Owner/author information
 owner:
   name: Gert Jansen van Rensburg
-  avatar: avatar.jpeg
+  avatar: gertjvr.png
   email: gertjvr@gmail.com
   # Social networking links used in footer. Update and remove as you like.
   twitter: gertjvr81   
@@ -46,10 +46,13 @@ links:
 timezone:    Australia/Brisbane
 future:      true
 pygments:    true
-markdown:    kramdown
+markdown:    redcarpet
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
 permalink:   /:categories/:title/
+
+redcarpet:
+  extensions: ["strikethrough"]
 
 kramdown:
   auto_ids: true
