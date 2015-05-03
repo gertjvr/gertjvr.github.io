@@ -44,7 +44,7 @@ Now where to start… NUnit contained a TheoryAttribute, but the implementation 
 
 Some more investigation, I found the TestCaseAttribute and some examples of parameterised unit tests with NUnit.
 
-{% highlight csharp %}
+```csharp
 [TestCase(12,3,4)]
 [TestCase(12,2,6)]
 [TestCase(12,4,3)]
@@ -52,13 +52,13 @@ public void DivideTest(int n, int d, int q)
 {
     Assert.AreEqual( q, n / d );
 }
-{% endhighlight %}
+```
 
 This looked much closer to what I was after, so I created an AutoTestCaseAttribute that inherited TestCaseAttribute, after many attempts to dynamically provide the arguments, I found that the property that I needed to set was an internal property, after some reading found out this was by design. #sadface
 
 More reading, found TestCaseSourceAttribute which allowed you to define the parameters else where,
 
-{% highlight csharp %}
+```csharp
 static int[] EvenNumbers = new int[] { 2, 4, 6, 8 };
  
 [Test, TestCaseSource("EvenNumbers")]
@@ -66,13 +66,13 @@ public void TestMethod(int num)
 {
     Assert.IsTrue( num % 2 == 0 );
 }
-{% endhighlight %}
+```
 
 This really looked like the way to go, but wasn’t meant to be. The arguments that you passed had to be statically defined and again extending the attribute had the same issue as TestCaseAttribute.
 
 The conclusion was that I needed to write an NUnitAddin with a implementation of ITestCaseProvider2
 
-{% highlight csharp %}
+```csharp
 public interface ITestCaseProvider
 {
     bool HasTestCasesFor(MethodInfo method);
@@ -84,11 +84,11 @@ public interface ITestCaseProvider2 : ITestCaseProvider
     bool HasTestCasesFor( MethodInfo method, Test suite );
     IEnumerable GetTestCasesFor( MethodInfo method, Test suite );
 }
-{% endhighlight %}
+```
 
 Below is where the magic happens.
 
-{% highlight csharp %}
+```csharp
 public class AutoTestCaseProvider : ITestCaseProvider2
 {
     ...
@@ -124,11 +124,11 @@ public class AutoTestCaseProvider : ITestCaseProvider2
  
     ...
 }
-{% endhighlight %}
+```
 
 Using reflection the NUnit.Framework identifies any unit tests with the AutoTestCaseAttribute applied, and then calls the GetArguments method which in turn uses the configured Fixture to generate any arguments and passes them to the parameterised unit test.
 
-{% highlight csharp %}
+```csharp
 public abstract class TestCaseDataAttribute : Attribute
 {
     ...
@@ -137,9 +137,9 @@ public abstract class TestCaseDataAttribute : Attribute
   
     ...
 }
-{% endhighlight %}
+```
   
-{% highlight csharp %}
+```csharp
 public class AutoTestCaseAttribute : TestCaseDataAttribute
 {
     ...
@@ -165,12 +165,12 @@ public class AutoTestCaseAttribute : TestCaseDataAttribute
   
     ...
 }
-{% endhighlight %}
+```
 
 
 An example of how to use.
 
-{% highlight csharp %}
+```csharp
 [TestFixture]
 public class Tests
 {
@@ -181,6 +181,6 @@ public class Tests
         Assert.Equal(expectedNumber, result);
     }
 }
-{% endhighlight %}
+```
 
 As I am writing this, I have submitted a pull request and awaiting a code review hopefully soon my code will be merged and set free for the world to use.
