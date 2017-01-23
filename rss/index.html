@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Gert Jansen van Rensburg's Blog]]></title><description><![CDATA[Learn from yesterday, live for today, hope for tomorrow. The important thing is not to stop questioning. - Albert Einstein]]></description><link>http://localhost:2368/</link><generator>Ghost 0.11</generator><lastBuildDate>Mon, 23 Jan 2017 22:57:06 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Why would anyone start learning Angular 1 today?]]></title><description><![CDATA[<p>Why in the world would you want to start learning angular now when all the other frameworks are so close to being released, my main reason for all the hard problems have all ready been solved in angular 1.</p>
+
+<h3 id="gettingstartedwithangular1">Getting Started with Angular 1</h3>
+
+<p>Where to start, I would start</p>]]></description><link>http://localhost:2368/starting-with-angular/</link><guid isPermaLink="false">30789004-67fa-454c-ab25-efa2e4e103f4</guid><category><![CDATA[angular]]></category><dc:creator><![CDATA[Gert]]></dc:creator><pubDate>Wed, 21 Oct 2015 09:00:00 GMT</pubDate><content:encoded><![CDATA[<p>Why in the world would you want to start learning angular now when all the other frameworks are so close to being released, my main reason for all the hard problems have all ready been solved in angular 1.</p>
+
+<h3 id="gettingstartedwithangular1">Getting Started with Angular 1</h3>
+
+<p>Where to start, I would start with CodeSchool's Angular course it explains the basics much better than any other site or blog post that I have found.</p>
+
+<h4 id="step1">Step 1</h4>
+
+<p>Lets create a simple webpage.</p>
+
+<ul>
+<li>Create a folder. mkdir example</li>
+<li>Create a file in the above folder called index.html with the content below.</li>
+</ul>
+
+<pre><code>&lt;html&gt;  
+&lt;body&gt;  
+    &lt;div&gt;Hello World&lt;div&gt;
+&lt;/body&gt;  
+&lt;/html&gt;  
+</code></pre>
+
+<ul>
+<li>Double click index.html and you will see a webpage with Hello World</li>
+</ul>
+
+<h4 id="step2">Step 2</h4>
+
+<p>Replace the content in index.html with the below snippet.</p>
+
+<pre><code>&lt;html data-ng-app="app"&gt;  
+&lt;body&gt;  
+    &lt;div data-ng-controller="Shell as vm"&gt;{{vm.greeting}}&lt;div&gt;
+
+    &lt;script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        (function() {
+            angular
+                .module('app', [])
+                .controller('Shell', Shell);
+
+            function Shell() {
+                var vm = this;
+                vm.greeting = "Hello World";
+            }
+        })();
+    &lt;/script&gt;
+&lt;/body&gt;  
+&lt;/html&gt;  
+</code></pre>
+
+<h4 id="step3">Step 3</h4>
+
+<p>Get creative, your imagination is your only limitation.</p>]]></content:encoded></item><item><title><![CDATA[How to setup NCrunch with AutoFixture.NUnit2]]></title><description><![CDATA[<p>Now that the AutoFixture.NUnit2 is out there in the wild, a few people have commented that the deployment story has a bit of friction, and I agree with that statement, but that is how the NUnit Extensibility model works.</p>
+
+<p>After a few attempts to make NCrunch work with AutoFixture.</p>]]></description><link>http://localhost:2368/how-to-setup-ncrunch-with-autofixture-nunit2-post/</link><guid isPermaLink="false">1adbbb16-32c8-4638-ac73-4e2d195a5d1a</guid><category><![CDATA[AutoFixture]]></category><category><![CDATA[C#]]></category><category><![CDATA[NUnit]]></category><category><![CDATA[NUnitAddin]]></category><category><![CDATA[Unit Testing]]></category><dc:creator><![CDATA[Gert]]></dc:creator><pubDate>Wed, 02 Oct 2013 09:00:00 GMT</pubDate><content:encoded><![CDATA[<p>Now that the AutoFixture.NUnit2 is out there in the wild, a few people have commented that the deployment story has a bit of friction, and I agree with that statement, but that is how the NUnit Extensibility model works.</p>
+
+<p>After a few attempts to make NCrunch work with AutoFixture.NUnit2 resorted to looking on NCrunch <a href="http://forum.ncrunch.net/yaf_postsm4652_Getting-NCrunch-to-load-NUnit-Addins.aspx#post4652">support forum</a> it mentioned to include the Addin in the test assembly. This got me thinking... what if we created a class inherited from AutoFixture.NUnit2 Addin. To my surprise this worked.</p>
+
+<p>Here is how:</p>
+
+<ol>
+<li>Install-Package AutoFixture.NUnit2  </li>
+<li>Install-Package NUnit.Runners (will have to manually reference tools\nunit.core.interfaces)  </li>
+<li>Remove this line [assembly: NUnit.Framework.RequiredAddin(Ploeh.AutoFixture.NUnit2.Addins.Constants.AutoDataExtension)] from AssemblyInfo.cs  </li>
+<li>Create the below class in each test assembly</li>
+</ol>
+
+<pre><code>using NUnit.Core.Extensibility;
+
+namespace ...  
+{
+    [NUnitAddin]
+    public class LocalAddin : Ploeh.AutoFixture.NUnit2.Addins.Addin
+    {   
+    }
+}
+</code></pre>
+
+<p>To make NCrunch work with AutoFixture.NUnit2 change the "solution configuration" - "framework utilisation type for NUnit" option from "Dynamic Analysis" to "Static Analysis" this is explained in the <a href="http://www.ncrunch.net/documentation/reference_solution-configuration_framework-utilisation-types">support documentation</a></p>
+
+<p><strong>Why does this work?</strong> When you are developing NUnit Addins, NUnit will load any classes that implements IAddin into the test runner's AddinRegistry this is intended for <strong>development only</strong>.</p>
+
+<p><strong>Interesting side effects</strong> You can use the buildin TeamCity NUnit Runner with AutoFixture.NUnit2 no need to use <a href="http://gertjvr.wordpress.com/2013/09/27/howto-autofixture-nunit2-with-teamcity/">msbuild script</a> as previously explained.</p>]]></content:encoded></item><item><title><![CDATA[How to setup AutoFixture.NUnit2]]></title><description><![CDATA[<p>With the release of AutoFixture.NUnit2 earlier today, here is some guidance how to get it working</p>
+
+<blockquote>
+  <p><a href="http://nunit.org/index.php?p=nunitAddins&amp;r=2.6.2">NUnit Documentation</a>: Addin Identification, Loading and Installation</p>
+  
+  <p>NUnit examines all assemblies in the bin/addins directory, looking for public classes with the NUnitAddinAttribute and implementing the IAddin interface. It loads all those it</p></blockquote>]]></description><link>http://localhost:2368/how-to-setup-autofixture-nunit2/</link><guid isPermaLink="false">2db12736-8d59-4310-9f7e-344d3f168b77</guid><category><![CDATA[AutoFixture]]></category><category><![CDATA[C#]]></category><category><![CDATA[NUnit]]></category><category><![CDATA[NUnitAddin]]></category><category><![CDATA[Unit Testing]]></category><dc:creator><![CDATA[Gert]]></dc:creator><pubDate>Mon, 23 Sep 2013 09:00:00 GMT</pubDate><content:encoded><![CDATA[<p>With the release of AutoFixture.NUnit2 earlier today, here is some guidance how to get it working</p>
+
+<blockquote>
+  <p><a href="http://nunit.org/index.php?p=nunitAddins&amp;r=2.6.2">NUnit Documentation</a>: Addin Identification, Loading and Installation</p>
+  
+  <p>NUnit examines all assemblies in the bin/addins directory, looking for public classes with the NUnitAddinAttribute and implementing the IAddin interface. It loads all those it finds as Addins</p>
+</blockquote>
+
+<p>After package install you need to copy <code>packages\AutoFixture.NUnit2.3.9.0\lib\net40\Ploeh.AutoFixture.NUnit2.Addins.dll</code> to <code>bin\addins</code> folder</p>
+
+<p>But where exactly is <code>bin/addins</code> located. The short answer is where is the <code>nunit.exe</code> or <code>nunit-console.exe</code> located</p>
+
+<p>Here is some default locations</p>
+
+<ul>
+<li>NUnit2.6.2 -> C:\Program Files (x86)\NUnit 2.6.2\bin\addins</li>
+<li>R# 8 -> C:\Program Files (x86)\JetBrains\ReSharper\v8.0\Bin\addins</li>
+<li>TestDriven.Net -> C:\Program Files (x86)\TestDriven.NET 3\NUnit\2.6\addins</li>
+</ul>
+
+<p><strong>Mark Seemann</strong> better explains how to use AutoDataAttribute <a href="http://blog.ploeh.dk/2010/10/08/AutoDataTheorieswithAutoFixture/">here</a>:</p>
+
+<p>NUnit example</p>
+
+<pre><code>[Test, AutoData]
+public void IntroductoryTest(  
+    int expectedNumber, MyClass sut)
+{
+    int result = sut.Echo(expectedNumber);
+    Assert.Equal(expectedNumber, result);
+}
+</code></pre>]]></content:encoded></item><item><title><![CDATA[How to setup TeamCity NUnit Runner with AutoFixture.NUnit2]]></title><description><![CDATA[<p>In a previous post I explained how setup AutoFixture.NUnit2 to work with a few 3rd party applications, to complete the AutoFixture.NUnit2 story we need to be able to configure <a href="http://www.jetbrains.com/teamcity/">Teamcity</a> for <a href="http://en.wikipedia.org/wiki/Continuous_integration">Continuous integration</a> according to TeamCity documentations there are a few ways to do this, but only way</p>]]></description><link>http://localhost:2368/how-to-setup-teamcity-with-autofixture-nunit2/</link><guid isPermaLink="false">156f6d00-8ed2-4fda-8a2d-5d0291d8b59e</guid><category><![CDATA[AutoFixture]]></category><category><![CDATA[C#]]></category><category><![CDATA[NUnit]]></category><category><![CDATA[NUnitAddin]]></category><category><![CDATA[Unit Testing]]></category><dc:creator><![CDATA[Gert]]></dc:creator><pubDate>Mon, 23 Sep 2013 09:00:00 GMT</pubDate><content:encoded><![CDATA[<p>In a previous post I explained how setup AutoFixture.NUnit2 to work with a few 3rd party applications, to complete the AutoFixture.NUnit2 story we need to be able to configure <a href="http://www.jetbrains.com/teamcity/">Teamcity</a> for <a href="http://en.wikipedia.org/wiki/Continuous_integration">Continuous integration</a> according to TeamCity documentations there are a few ways to do this, but only way I have been successful so far was to configure msbuild script to run <a href="http://confluence.jetbrains.com/display/TCD8/TeamCity+Addin+for+NUnit">nunit-console.exe</a></p>
+
+<p>Example of msbuild script to copy Teamcity NUnit Addin and <code>AutoFixture.NUnit2.Addins.dll</code></p>
+
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;  
+&lt;Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="CompleteBuild" ToolsVersion="4.0"&gt;  
+    &lt;PropertyGroup&gt;
+        &lt;NUnitHome&gt;packages\nunit.runners.2.6.2\tools&lt;/NUnitHome&gt;
+    &lt;/PropertyGroup&gt;
+
+    &lt;ItemGroup&gt;
+        &lt;NUnitAddinFiles Include="$(teamcity_dotnet_nunitaddin)-2.6.2.*" /&gt;
+        &lt;NUnitAddinFiles Include="packages\AutoFixture.NUnit2.3.9.0\lib\net40\Ploeh.AutoFixture.NUnit2.Addins.dll" /&gt;
+    &lt;/ItemGroup&gt;
+
+    &lt;Target Name="RunTests"&gt;
+        &lt;MakeDir Directories="$(NUnitHome)\addins" /&gt;
+    &lt;Copy SourceFiles="@(NUnitAddinFiles)" DestinationFolder="$(NUnitHome)\addins" /&gt;
+    &lt;Exec Command="$(NUnitHome)\nunit-console.exe $(TestAssembly)" /&gt;
+    &lt;/Target&gt;
+
+    &lt;Target Name="CompleteBuild" DependsOnTargets="RunTests" /&gt;
+&lt;/Project&gt;  
+</code></pre>]]></content:encoded></item><item><title><![CDATA[NUnit Extensibility and AutoFixture]]></title><description><![CDATA[<p>As a software consultant we can’t always choose the libraries we use on a client site, and so the story begins.</p>
+
+<p>I have fallen in love with a library called AutoFixture it really simplifies the Arrange phase in writing unit tests. There are many patterns on how to use</p>]]></description><link>http://localhost:2368/nunit-extensibility-and-autofixture/</link><guid isPermaLink="false">9b06dd1b-1ccf-4f82-9fdd-d5a3a4108646</guid><category><![CDATA[AutoFixture]]></category><category><![CDATA[C#]]></category><category><![CDATA[NUnit]]></category><category><![CDATA[NUnitAddin]]></category><category><![CDATA[Unit Testing]]></category><dc:creator><![CDATA[Gert]]></dc:creator><pubDate>Thu, 29 Aug 2013 02:00:00 GMT</pubDate><content:encoded><![CDATA[<p>As a software consultant we can’t always choose the libraries we use on a client site, and so the story begins.</p>
+
+<p>I have fallen in love with a library called AutoFixture it really simplifies the Arrange phase in writing unit tests. There are many patterns on how to use AutoFixture, but one pattern in particular that I like is where your unit test doesn’t take any dependency on AutoFixture.</p>
+
+<p><a href="http://blog.ploeh.dk/">Mark Seemann</a> the author of <a href="https://github.com/AutoFixture/AutoFixture">AutoFixture</a> also wrote an extension for <a href="http://xunit.codeplex.com/">xUnit.net</a> <code>AutoDataAttribute</code> which supplies auto generated arguments to a parameterised unit test.</p>
+
+<pre><code>[Theory, AutoData]
+public void IntroductoryTest(int expectedNumber, MyClass sut)  
+{
+    int result = sut.Echo(expectedNumber);
+    Assert.Equal(expectedNumber, result);
+}
+</code></pre>
+
+<p>Extending AutoDataAttribute allows you to customise the internal Fixture that is used during auto generate process.  </p>
+
+<pre><code>public class TestConventionsAttribute  
+  : AutoDataAttribute
+{
+   public TestConventionsAttribute()
+        : base(new Fixture().Customize(new AutoNSubstituteCustomization())
+    {
+    }
+}
+</code></pre>
+
+<p>I wanted to be able to do the same using NUnit as said above, we can’t always choose what unit testing library we use. So how do you extend NUnit? After reading a few blog posts and NUnit Documentation on extensibility I was more confused than when I started.</p>
+
+<p>Now where to start… NUnit contained a TheoryAttribute, but the implementation is really different from what I am used to in xUnit, and the NUnit <code>DataAttribute</code> is a property only attribute, so this wasn’t even an option to extend.</p>
+
+<p>Some more investigation, I found the <code>TestCaseAttribute</code> and some examples of parameterised unit tests with NUnit.</p>
+
+<pre><code>[TestCase(12,3,4)]
+[TestCase(12,2,6)]
+[TestCase(12,4,3)]
+public void DivideTest(int n, int d, int q)  
+{
+    Assert.AreEqual( q, n / d );
+}
+</code></pre>
+
+<p>This looked much closer to what I was after, so I created an <code>AutoTestCaseAttribute</code> that inherited <code>TestCaseAttribute</code>, after many attempts to dynamically provide the arguments, I found that the property that I needed to set was an internal property, after some reading found out this was by design. #sadface</p>
+
+<p>More reading, found <code>TestCaseSourceAttribute</code> which allowed you to define the parameters else where,</p>
+
+<pre><code>static int[] EvenNumbers = new int[] { 2, 4, 6, 8 };
+
+[Test, TestCaseSource("EvenNumbers")]
+public void TestMethod(int num)  
+{
+    Assert.IsTrue( num % 2 == 0 );
+}
+</code></pre>
+
+<p>This really looked like the way to go, but wasn’t meant to be. The arguments that you passed had to be statically defined and again extending the attribute had the same issue as <code>TestCaseAttribute</code>.</p>
+
+<p>The conclusion was that I needed to write an NUnitAddin with a implementation of <a href="http://nunit.org/index.php?p=testcaseProviders&amp;r=2.6.2">ITestCaseProvider2</a></p>
+
+<pre><code>public interface ITestCaseProvider  
+{
+    bool HasTestCasesFor(MethodInfo method);
+    IEnumerable GetTestCasesFor(MethodInfo method);
+}
+
+public interface ITestCaseProvider2 : ITestCaseProvider  
+{
+    bool HasTestCasesFor( MethodInfo method, Test suite );
+    IEnumerable GetTestCasesFor( MethodInfo method, Test suite );
+}
+</code></pre>
+
+<p>Below is where the magic happens.</p>
+
+<pre><code>public class AutoTestCaseProvider : ITestCaseProvider2  
+{
+    ...
+
+    public bool HasTestCasesFor(MethodInfo method)
+    {
+        return Reflect.HasAttribute(method, AutoFixtureNUnitFramework.AutoTestCaseAttribute, false);
+    }
+
+    ...
+
+    public IEnumerable GetTestCasesFor(MethodInfo method, Test parentSuite)
+    {
+        Type[] parameterTypes = method.GetParameters().Select(o =&gt; o.ParameterType).ToArray();
+
+        ArrayList parameterList = new ArrayList();
+
+        var attributes = Reflect.GetAttributes(method, AutoFixtureNUnitFramework.AutoTestCaseAttribute, false);
+
+        foreach (TestCaseDataAttribute attr in attributes)
+        {
+            foreach (var arguments in attr.GetArguments(method, parameterTypes))
+            {
+                ParameterSet parms = new ParameterSet();
+                parms.Arguments = arguments;
+
+                parameterList.Add(parms);
+            }
+        }
+
+        return parameterList;
+    }
+
+    ...
+}
+</code></pre>
+
+<p>Using reflection the <code>NUnit.Framework</code> identifies any unit tests with the <code>AutoTestCaseAttribute</code> applied, and then calls the GetArguments method which in turn uses the configured Fixture to generate any arguments and passes them to the parameterised unit test.</p>
+
+<pre><code>public abstract class TestCaseDataAttribute : Attribute  
+{
+    ...
+
+    public abstract IEnumerable&lt;object[]&gt; GetArguments(MethodInfo method);
+
+    ...
+}
+public class AutoTestCaseAttribute : TestCaseDataAttribute  
+{
+    ...
+
+    public override IEnumerable&lt;object[]&gt; GetArguments(MethodInfo method)
+    {
+        if (method == null)
+        {
+            throw new ArgumentNullException("method");
+        }
+
+        var specimens = new List&lt;object&gt;();
+        foreach (var p in method.GetParameters())
+        {
+            CustomizeFixture(p);
+
+            var specimen = Resolve(p);
+            specimens.Add(specimen);
+        }
+
+        return new[] { specimens.ToArray() };
+    }    
+
+    ...
+}
+</code></pre>
+
+<p>An example of how to use.</p>
+
+<pre><code>[TestFixture]
+public class Tests  
+{
+    [Test, AutoTestCase]
+    public void IntroductoryTest(int expectedNumber, MyClass sut)
+    {
+        int result = sut.Echo(expectedNumber);
+        Assert.Equal(expectedNumber, result);
+    }
+}
+</code></pre>
+
+<p>As I am writing this, I have submitted a <a href="https://github.com/AutoFixture/AutoFixture/pull/158">pull request</a> and awaiting a code review hopefully soon my code will be merged and set free for the world to use.</p>]]></content:encoded></item></channel></rss>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>NUnit Extensibility and AutoFixture</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css?v=17d357889f" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <link rel="canonical" href="http://localhost:2368/nunit-extensibility-and-autofixture/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="http://localhost:2368/nunit-extensibility-and-autofixture/amp/" />
+    
+    <meta property="og:site_name" content="Gert Jansen van Rensburg&#x27;s Blog" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="NUnit Extensibility and AutoFixture" />
+    <meta property="og:description" content="As a software consultant we can’t always choose the libraries we use on a client site, and so the story begins. I have fallen in love with a library called AutoFixture it really simplifies the Arrange phase in writing unit tests. There are many patterns on how to use" />
+    <meta property="og:url" content="http://localhost:2368/nunit-extensibility-and-autofixture/" />
+    <meta property="article:published_time" content="2013-08-29T02:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-05-16T11:45:29.000Z" />
+    <meta property="article:tag" content="AutoFixture" />
+    <meta property="article:tag" content="C#" />
+    <meta property="article:tag" content="NUnit" />
+    <meta property="article:tag" content="NUnitAddin" />
+    <meta property="article:tag" content="Unit Testing" />
+    
+    <meta property="article:author" content="https://www.facebook.com/gertjvr" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="NUnit Extensibility and AutoFixture" />
+    <meta name="twitter:description" content="As a software consultant we can’t always choose the libraries we use on a client site, and so the story begins. I have fallen in love with a library called AutoFixture it really simplifies the Arrange phase in writing unit tests. There are many patterns on how to use" />
+    <meta name="twitter:url" content="http://localhost:2368/nunit-extensibility-and-autofixture/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Gert" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="AutoFixture, C#, NUnit, NUnitAddin, Unit Testing" />
+    <meta name="twitter:creator" content="@gertjvr81" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Gert Jansen van Rensburg&#x27;s Blog",
+        "logo": "http://localhost:2368/ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Gert",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/1002fbc488172165e7b49bd70d8d6f6a?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "http://localhost:2368/author/gertjvr/",
+        "sameAs": [
+            "https://www.facebook.com/gertjvr",
+            "https://twitter.com/gertjvr81"
+        ],
+        "description": "About me? I have been programming since I can remember if it wasn’t the video recorder for my mum, then it was whatever electronic device I can get my hands on."
+    },
+    "headline": "NUnit Extensibility and AutoFixture",
+    "url": "http://localhost:2368/nunit-extensibility-and-autofixture/",
+    "datePublished": "2013-08-29T02:00:00.000Z",
+    "dateModified": "2016-05-16T11:45:29.000Z",
+    "keywords": "AutoFixture, C#, NUnit, NUnitAddin, Unit Testing",
+    "description": "As a software consultant we can’t always choose the libraries we use on a client site, and so the story begins. I have fallen in love with a library called AutoFixture it really simplifies the Arrange phase in writing unit tests. There are many patterns on how to use",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11" />
+    <link rel="alternate" type="application/rss+xml" title="Gert Jansen van Rensburg&#x27;s Blog" href="http://localhost:2368/rss/" />
+</head>
+<body class="post-template tag-autofixture tag-c tag-nunit tag-nunitaddin tag-unit-testing nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://localhost:2368/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="http://localhost:2368/about/">About</a></li>
+    </ul>
+        <a class="subscribe-button icon-feed" href="http://localhost:2368/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post tag-autofixture tag-c tag-nunit tag-nunitaddin tag-unit-testing">
+
+        <header class="post-header">
+            <h1 class="post-title">NUnit Extensibility and AutoFixture</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2013-08-29">29 August 2013</time>  on <a href="/tag/autofixture/">AutoFixture</a>, <a href="/tag/c/">C#</a>, <a href="/tag/nunit/">NUnit</a>, <a href="/tag/nunitaddin/">NUnitAddin</a>, <a href="/tag/unit-testing/">Unit Testing</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>As a software consultant we can’t always choose the libraries we use on a client site, and so the story begins.</p>
+
+<p>I have fallen in love with a library called AutoFixture it really simplifies the Arrange phase in writing unit tests. There are many patterns on how to use AutoFixture, but one pattern in particular that I like is where your unit test doesn’t take any dependency on AutoFixture.</p>
+
+<p><a href="http://blog.ploeh.dk/">Mark Seemann</a> the author of <a href="https://github.com/AutoFixture/AutoFixture">AutoFixture</a> also wrote an extension for <a href="http://xunit.codeplex.com/">xUnit.net</a> <code>AutoDataAttribute</code> which supplies auto generated arguments to a parameterised unit test.</p>
+
+<pre><code>[Theory, AutoData]
+public void IntroductoryTest(int expectedNumber, MyClass sut)  
+{
+    int result = sut.Echo(expectedNumber);
+    Assert.Equal(expectedNumber, result);
+}
+</code></pre>
+
+<p>Extending AutoDataAttribute allows you to customise the internal Fixture that is used during auto generate process.  </p>
+
+<pre><code>public class TestConventionsAttribute  
+  : AutoDataAttribute
+{
+   public TestConventionsAttribute()
+        : base(new Fixture().Customize(new AutoNSubstituteCustomization())
+    {
+    }
+}
+</code></pre>
+
+<p>I wanted to be able to do the same using NUnit as said above, we can’t always choose what unit testing library we use. So how do you extend NUnit? After reading a few blog posts and NUnit Documentation on extensibility I was more confused than when I started.</p>
+
+<p>Now where to start… NUnit contained a TheoryAttribute, but the implementation is really different from what I am used to in xUnit, and the NUnit <code>DataAttribute</code> is a property only attribute, so this wasn’t even an option to extend.</p>
+
+<p>Some more investigation, I found the <code>TestCaseAttribute</code> and some examples of parameterised unit tests with NUnit.</p>
+
+<pre><code>[TestCase(12,3,4)]
+[TestCase(12,2,6)]
+[TestCase(12,4,3)]
+public void DivideTest(int n, int d, int q)  
+{
+    Assert.AreEqual( q, n / d );
+}
+</code></pre>
+
+<p>This looked much closer to what I was after, so I created an <code>AutoTestCaseAttribute</code> that inherited <code>TestCaseAttribute</code>, after many attempts to dynamically provide the arguments, I found that the property that I needed to set was an internal property, after some reading found out this was by design. #sadface</p>
+
+<p>More reading, found <code>TestCaseSourceAttribute</code> which allowed you to define the parameters else where,</p>
+
+<pre><code>static int[] EvenNumbers = new int[] { 2, 4, 6, 8 };
+
+[Test, TestCaseSource("EvenNumbers")]
+public void TestMethod(int num)  
+{
+    Assert.IsTrue( num % 2 == 0 );
+}
+</code></pre>
+
+<p>This really looked like the way to go, but wasn’t meant to be. The arguments that you passed had to be statically defined and again extending the attribute had the same issue as <code>TestCaseAttribute</code>.</p>
+
+<p>The conclusion was that I needed to write an NUnitAddin with a implementation of <a href="http://nunit.org/index.php?p=testcaseProviders&amp;r=2.6.2">ITestCaseProvider2</a></p>
+
+<pre><code>public interface ITestCaseProvider  
+{
+    bool HasTestCasesFor(MethodInfo method);
+    IEnumerable GetTestCasesFor(MethodInfo method);
+}
+
+public interface ITestCaseProvider2 : ITestCaseProvider  
+{
+    bool HasTestCasesFor( MethodInfo method, Test suite );
+    IEnumerable GetTestCasesFor( MethodInfo method, Test suite );
+}
+</code></pre>
+
+<p>Below is where the magic happens.</p>
+
+<pre><code>public class AutoTestCaseProvider : ITestCaseProvider2  
+{
+    ...
+
+    public bool HasTestCasesFor(MethodInfo method)
+    {
+        return Reflect.HasAttribute(method, AutoFixtureNUnitFramework.AutoTestCaseAttribute, false);
+    }
+
+    ...
+
+    public IEnumerable GetTestCasesFor(MethodInfo method, Test parentSuite)
+    {
+        Type[] parameterTypes = method.GetParameters().Select(o =&gt; o.ParameterType).ToArray();
+
+        ArrayList parameterList = new ArrayList();
+
+        var attributes = Reflect.GetAttributes(method, AutoFixtureNUnitFramework.AutoTestCaseAttribute, false);
+
+        foreach (TestCaseDataAttribute attr in attributes)
+        {
+            foreach (var arguments in attr.GetArguments(method, parameterTypes))
+            {
+                ParameterSet parms = new ParameterSet();
+                parms.Arguments = arguments;
+
+                parameterList.Add(parms);
+            }
+        }
+
+        return parameterList;
+    }
+
+    ...
+}
+</code></pre>
+
+<p>Using reflection the <code>NUnit.Framework</code> identifies any unit tests with the <code>AutoTestCaseAttribute</code> applied, and then calls the GetArguments method which in turn uses the configured Fixture to generate any arguments and passes them to the parameterised unit test.</p>
+
+<pre><code>public abstract class TestCaseDataAttribute : Attribute  
+{
+    ...
+
+    public abstract IEnumerable&lt;object[]&gt; GetArguments(MethodInfo method);
+
+    ...
+}
+public class AutoTestCaseAttribute : TestCaseDataAttribute  
+{
+    ...
+
+    public override IEnumerable&lt;object[]&gt; GetArguments(MethodInfo method)
+    {
+        if (method == null)
+        {
+            throw new ArgumentNullException("method");
+        }
+
+        var specimens = new List&lt;object&gt;();
+        foreach (var p in method.GetParameters())
+        {
+            CustomizeFixture(p);
+
+            var specimen = Resolve(p);
+            specimens.Add(specimen);
+        }
+
+        return new[] { specimens.ToArray() };
+    }    
+
+    ...
+}
+</code></pre>
+
+<p>An example of how to use.</p>
+
+<pre><code>[TestFixture]
+public class Tests  
+{
+    [Test, AutoTestCase]
+    public void IntroductoryTest(int expectedNumber, MyClass sut)
+    {
+        int result = sut.Echo(expectedNumber);
+        Assert.Equal(expectedNumber, result);
+    }
+}
+</code></pre>
+
+<p>As I am writing this, I have submitted a <a href="https://github.com/AutoFixture/AutoFixture/pull/158">pull request</a> and awaiting a code review hopefully soon my code will be merged and set free for the world to use.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="/author/gertjvr/" style="background-image: url(//www.gravatar.com/avatar/1002fbc488172165e7b49bd70d8d6f6a?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x)"><span class="hidden">Gert's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="/author/gertjvr/">Gert</a></h4>
+
+                    <p>About me? I have been programming since I can remember if it wasn’t the video recorder for my mum, then it was whatever electronic device I can get my hands on.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Brisbane</span>
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=NUnit%20Extensibility%20and%20AutoFixture&amp;url=http://localhost:2368/nunit-extensibility-and-autofixture/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/nunit-extensibility-and-autofixture/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:2368/nunit-extensibility-and-autofixture/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="/how-to-setup-autofixture-nunit2/">
+        <section class="post">
+            <h2>How to setup AutoFixture.NUnit2</h2>
+            <p>With the release of AutoFixture.NUnit2 earlier today, here is some guidance how to get it working   NUnit Documentation:&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://localhost:2368">Gert Jansen van Rensburg&#x27;s Blog</a> &copy; 2017</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js?v=17d357889f"></script>
+    <script type="text/javascript" src="/assets/js/index.js?v=17d357889f"></script>
+
+</body>
+</html>

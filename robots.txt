@@ -1,0 +1,3 @@
+User-agent: *
+Sitemap: http://blog.gertjvr.com/sitemap.xml
+Disallow: /ghost/
