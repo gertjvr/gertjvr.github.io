@@ -11,14 +11,14 @@
 
     <link rel="shortcut icon" href="/favicon.ico">
 
-    <link rel="canonical" href="http://localhost:2368/how-to-setup-teamcity-with-autofixture-nunit2/" />
+    <link rel="canonical" href="http://blog.gertjvr.com/how-to-setup-teamcity-with-autofixture-nunit2/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    
+
     <meta property="og:site_name" content="Gert Jansen van Rensburg&#x27;s Blog" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="How to setup TeamCity NUnit Runner with AutoFixture.NUnit2" />
     <meta property="og:description" content="In a previous post I explained how setup AutoFixture.NUnit2 to work with a few 3rd party applications, to complete the AutoFixture.NUnit2 story we need to be able to configure Teamcity for Continuous integration according to TeamCity documentations there are a few ways to do this, but only way" />
-    <meta property="og:url" content="http://localhost:2368/how-to-setup-teamcity-with-autofixture-nunit2/" />
+    <meta property="og:url" content="http://blog.gertjvr.com/how-to-setup-teamcity-with-autofixture-nunit2/" />
     <meta property="article:published_time" content="2013-09-23T09:00:00.000Z" />
     <meta property="article:modified_time" content="2016-05-16T11:41:56.000Z" />
     <meta property="article:tag" content="AutoFixture" />
@@ -26,18 +26,18 @@
     <meta property="article:tag" content="NUnit" />
     <meta property="article:tag" content="NUnitAddin" />
     <meta property="article:tag" content="Unit Testing" />
-    
+
     <meta property="article:author" content="https://www.facebook.com/gertjvr" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="How to setup TeamCity NUnit Runner with AutoFixture.NUnit2" />
     <meta name="twitter:description" content="In a previous post I explained how setup AutoFixture.NUnit2 to work with a few 3rd party applications, to complete the AutoFixture.NUnit2 story we need to be able to configure Teamcity for Continuous integration according to TeamCity documentations there are a few ways to do this, but only way" />
-    <meta name="twitter:url" content="http://localhost:2368/how-to-setup-teamcity-with-autofixture-nunit2/" />
+    <meta name="twitter:url" content="http://blog.gertjvr.com/how-to-setup-teamcity-with-autofixture-nunit2/" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Gert" />
     <meta name="twitter:label2" content="Filed under" />
     <meta name="twitter:data2" content="AutoFixture, C#, NUnit, NUnitAddin, Unit Testing" />
     <meta name="twitter:creator" content="@gertjvr81" />
-    
+
     <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -45,7 +45,7 @@
     "publisher": {
         "@type": "Organization",
         "name": "Gert Jansen van Rensburg&#x27;s Blog",
-        "logo": "http://localhost:2368/ghost/img/ghosticon.jpg"
+        "logo": "http://blog.gertjvr.com/ghost/img/ghosticon.jpg"
     },
     "author": {
         "@type": "Person",
@@ -56,7 +56,7 @@
             "width": 250,
             "height": 250
         },
-        "url": "http://localhost:2368/author/gertjvr/",
+        "url": "http://blog.gertjvr.com/author/gertjvr/",
         "sameAs": [
             "https://www.facebook.com/gertjvr",
             "https://twitter.com/gertjvr81"
@@ -64,20 +64,20 @@
         "description": "About me? I have been programming since I can remember if it wasn’t the video recorder for my mum, then it was whatever electronic device I can get my hands on."
     },
     "headline": "How to setup TeamCity NUnit Runner with AutoFixture.NUnit2",
-    "url": "http://localhost:2368/how-to-setup-teamcity-with-autofixture-nunit2/",
+    "url": "http://blog.gertjvr.com/how-to-setup-teamcity-with-autofixture-nunit2/",
     "datePublished": "2013-09-23T09:00:00.000Z",
     "dateModified": "2016-05-16T11:41:56.000Z",
     "keywords": "AutoFixture, C#, NUnit, NUnitAddin, Unit Testing",
     "description": "In a previous post I explained how setup AutoFixture.NUnit2 to work with a few 3rd party applications, to complete the AutoFixture.NUnit2 story we need to be able to configure Teamcity for Continuous integration according to TeamCity documentations there are a few ways to do this, but only way",
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "http://localhost:2368"
+        "@id": "http://blog.gertjvr.com"
     }
 }
     </script>
 
     <meta name="generator" content="Ghost 0.11" />
-    <link rel="alternate" type="application/rss+xml" title="Gert Jansen van Rensburg&#x27;s Blog" href="http://localhost:2368/rss/" />
+    <link rel="alternate" type="application/rss+xml" title="Gert Jansen van Rensburg&#x27;s Blog" href="http://blog.gertjvr.com/rss/" />
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,600,400" />
     <style amp-custom>
@@ -846,14 +846,14 @@
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
     <script async src="https://cdn.ampproject.org/v0.js"></script>
 
-    
+
 
 </head>
 
 <body class="amp-template">
     <header class="main-header">
         <nav class="blog-title">
-            <a href="http://localhost:2368">Gert Jansen van Rensburg&#x27;s Blog</a>
+            <a href="http://blog.gertjvr.com">Gert Jansen van Rensburg&#x27;s Blog</a>
         </nav>
     </header>
 
@@ -873,8 +873,8 @@
 
 <p>Example of msbuild script to copy Teamcity NUnit Addin and <code>AutoFixture.NUnit2.Addins.dll</code></p>
 
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  
-&lt;Project xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot; DefaultTargets=&quot;CompleteBuild&quot; ToolsVersion=&quot;4.0&quot;&gt;  
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Project xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot; DefaultTargets=&quot;CompleteBuild&quot; ToolsVersion=&quot;4.0&quot;&gt;
     &lt;PropertyGroup&gt;
         &lt;NUnitHome&gt;packages\nunit.runners.2.6.2\tools&lt;/NUnitHome&gt;
     &lt;/PropertyGroup&gt;
@@ -891,7 +891,7 @@
     &lt;/Target&gt;
 
     &lt;Target Name=&quot;CompleteBuild&quot; DependsOnTargets=&quot;RunTests&quot; /&gt;
-&lt;/Project&gt;  
+&lt;/Project&gt;
 </code></pre>
 
             </section>
@@ -899,7 +899,7 @@
         </article>
     </main>
     <footer class="site-footer clearfix">
-        <section class="copyright"><a href="http://localhost:2368">Gert Jansen van Rensburg&#x27;s Blog</a> &copy; 2017</section>
+        <section class="copyright"><a href="http://blog.gertjvr.com">Gert Jansen van Rensburg&#x27;s Blog</a> &copy; 2017</section>
         <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
     </footer>
 </body>
